@@ -56,6 +56,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (UIController.Instance.updatePricePanel)
+        {
+            if (UIController.Instance.updatePricePanel.activeSelf)
+            {
+                return;
+            }
+        }
+
         //Looking-Controls
         Vector2 lookInput = lookAction.action.ReadValue<Vector2>();
         
@@ -120,6 +128,17 @@ public class PlayerController : MonoBehaviour
                         heldPickUpObject.transform.SetParent(holdPoint);
                         heldPickUpObject.PickUp();
                     }
+                }
+            }
+
+            if (Keyboard.current.eKey.wasPressedThisFrame)
+            {
+                Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f,0.5f,0f));
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, interactionRange, whatIsShelf))
+                {
+                    hit.transform.GetComponent<ShelfSpaceController>().StartPriceUpdateFlow();
                 }
             }
         }

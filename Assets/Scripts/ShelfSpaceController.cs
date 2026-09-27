@@ -6,6 +6,7 @@ public class ShelfSpaceController : MonoBehaviour
 {
     public StockInformation stockInformation;
     public List<StockObject> objectOnShelf;
+    
     public List<Transform> bigDrinkBottlePlacementTransforms;
     public List<Transform> cerealPlacementTransforms;
     public List<Transform> chipsPlacementTransforms;
@@ -119,7 +120,7 @@ public class ShelfSpaceController : MonoBehaviour
             objectToPlace.PlaceItem();
             objectOnShelf.Add(objectToPlace);
             
-            shelfPriceLabel.text = "$"+objectOnShelf[0].stockInformation.price;
+            UpdateDisplayPrice(objectOnShelf[0].stockInformation.currentPrice);
         }
     }
 
@@ -133,9 +134,24 @@ public class ShelfSpaceController : MonoBehaviour
         }
         if(objectOnShelf.Count == 0)
         {
-            shelfPriceLabel.text = "$0";
+            shelfPriceLabel.text = "$0.00";
+            stockInformation = null;
         }
 
         return objectToReturn;
+    }
+
+    public void StartPriceUpdateFlow()
+    {
+        if (objectOnShelf.Count > 0)
+        {
+            UIController.Instance.OpenUpdatePricePanel(stockInformation);
+        }
+    }
+
+    public void UpdateDisplayPrice(float price)
+    {
+        stockInformation.currentPrice = price;
+        shelfPriceLabel.text = "$"+stockInformation.currentPrice.ToString("F2");
     }
 }
