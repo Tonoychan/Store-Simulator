@@ -7,19 +7,19 @@ public class PlayerController : MonoBehaviour
     public InputActionReference moveAction;
     public InputActionReference jumpAction;
     public InputActionReference lookAction;
-    [Tooltip("Attack Action")]
-    public InputActionReference LeftMouseAction;
     public Transform holdPoint;
     
     public CharacterController controller;
     
-    public LayerMask WhatIsStock;
+    public LayerMask whatIsStock;
+    public LayerMask whatIsShelf;
     
     [Header("Private References")]
     [SerializeField]
     private Camera _camera;
     [SerializeField]
-    private GameObject heldPickUpObject;
+    private StockObject heldPickUpObject;
+    
     
     [Header("Value Factor Controls")]
     [SerializeField]
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
         //Movement
         Vector2 moveInput = moveAction.action.ReadValue<Vector2>();
         Vector3 verticalMove = transform.forward * moveInput.y;
-        Vector3 horizontalMove = transform.forward * moveInput.x;
+        Vector3 horizontalMove = transform.right * moveInput.x;
         Vector3 moveAmount = (horizontalMove + verticalMove).normalized;
         
         moveAmount *= (moveSpeed * Time.deltaTime);
@@ -98,26 +98,55 @@ public class PlayerController : MonoBehaviour
                 Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f,0.5f,0f));
                 RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, interactionRange, WhatIsStock))
+                if (Physics.Raycast(ray, out hit, interactionRange, whatIsStock))
                 {
-                    heldPickUpObject = hit.transform.gameObject;
+                    heldPickUpObject = hit.transform.GetComponent<StockObject>();
                     heldPickUpObject.transform.SetParent(holdPoint);
-                    heldPickUpObject.transform.localPosition = new Vector3(0.2f,0f,0f);
-                    heldPickUpObject.transform.localRotation = Quaternion.identity;
-                    heldPickUpObject.GetComponent<Rigidbody>().isKinematic = true;
+                    heldPickUpObject.PickUp();
+                    
+                }
+            }
+
+            if (Mouse.current.rightButton.wasPressedThisFrame)
+            {
+                Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f,0.5f,0f));
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, interactionRange, whatIsShelf))
+                {
+                    heldPickUpObject = hit.transform.GetComponent<ShelfSpaceController>().GetItemFromStock();
+                    if (heldPickUpObject != null)
+                    {
+                        heldPickUpObject.transform.SetParent(holdPoint);
+                        heldPickUpObject.PickUp();
+                    }
                 }
             }
         }
         else
         {
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f,0.5f,0f));
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, interactionRange, whatIsShelf))
+                {
+                    hit.transform.GetComponent<ShelfSpaceController>().PlaceItemOnStock(heldPickUpObject);
+                    if (heldPickUpObject.isPlaced)
+                    {
+                        heldPickUpObject = null;
+                    }
+                }
+            }
+
             //Leaving or throwing Object
             if (Mouse.current.rightButton.wasPressedThisFrame)
             {
-                var heldObjectRigidBody = heldPickUpObject.GetComponent<Rigidbody>();
+                heldPickUpObject.ReleaseItem();
                 heldPickUpObject.transform.SetParent(null);
+                heldPickUpObject.rigidbody.AddForce(_camera.transform.forward * throwForce, ForceMode.Impulse);
                 heldPickUpObject = null;
-                heldObjectRigidBody.isKinematic = false;
-                heldObjectRigidBody.AddForce(_camera.transform.forward * throwForce, ForceMode.Impulse);
             }
         }
     }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5388977174134535690
+--- !u!1 &4350888901111100649
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6645804646701440977}
-  - component: {fileID: 8970702854900905300}
-  - component: {fileID: 3665987803643677921}
-  - component: {fileID: 6697138710018895458}
-  m_Layer: 0
-  m_Name: bottle1_lime
+  - component: {fileID: 4386256768788793584}
+  - component: {fileID: 192109354231341872}
+  - component: {fileID: 6668784485154804673}
+  - component: {fileID: 5126902438530594285}
+  - component: {fileID: 630756952934771481}
+  - component: {fileID: 2580045612225231897}
+  m_Layer: 6
+  m_Name: Bottle_Lime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6645804646701440977
+--- !u!4 &4386256768788793584
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5388977174134535690}
+  m_GameObject: {fileID: 4350888901111100649}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -34,21 +36,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8970702854900905300
+--- !u!33 &192109354231341872
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5388977174134535690}
+  m_GameObject: {fileID: 4350888901111100649}
   m_Mesh: {fileID: 6188042233490851474, guid: bc7ab6872ca788845aea7d5bb2db774a, type: 3}
---- !u!23 &3665987803643677921
+--- !u!23 &6668784485154804673
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5388977174134535690}
+  m_GameObject: {fileID: 4350888901111100649}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,13 +93,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6697138710018895458
+--- !u!64 &5126902438530594285
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5388977174134535690}
+  m_GameObject: {fileID: 4350888901111100649}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -113,3 +115,50 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6188042233490851474, guid: bc7ab6872ca788845aea7d5bb2db774a, type: 3}
+--- !u!54 &630756952934771481
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4350888901111100649}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2580045612225231897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4350888901111100649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54760c02289a6d443afdf0a6626f50de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StockObject
+  stockInformation:
+    name: Lime Drink
+    typeOfStock: 1
+    price: 2.5
+  moveSpeed: 5
+  isPlaced: 0
+  rigidbody: {fileID: 0}
+  collider: {fileID: 0}
